@@ -6,6 +6,11 @@ type realModeMemory struct {
 	buffer [1 << 20]byte
 }
 
+func (real_mode_memory *realModeMemory) GetSize() uint64 {
+	// Return our memory size
+	return 1 << 20
+}
+
 func (real_mode_memory *realModeMemory) OutputByte(address RealModeMemoryAddress, byteValue byte) error {
 	panic("not implemented") // TODO: Implement
 }
@@ -31,9 +36,15 @@ func (real_mode_memory *realModeMemory) InputQWord(address RealModeMemoryAddress
 	panic("not implemented") // TODO: Implement
 }
 
-// Returns the memory as a byte array
-func (real_mode_memory *realModeMemory) GetBytes() ([]byte, uint64) {
-	panic("not implemented") // TODO: Implement
+// Clone our buffer and return it
+func (real_mode_memory *realModeMemory) GetBytes() []byte {
+	// Allocate a new array the same size as our memory buffer
+	return_value := make([]byte, real_mode_memory.GetSize())
+	// Copy our buffer into our return value
+	copy(return_value, real_mode_memory.buffer[:])
+
+	// Return our new array
+	return return_value
 }
 
 

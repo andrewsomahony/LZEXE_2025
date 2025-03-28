@@ -1,6 +1,7 @@
 package memory
 
 type IMemory[ADDRESS_TYPE any] interface {
+	GetSize() uint64
 	OutputByte(address ADDRESS_TYPE, byteValue byte) error
 	OutputWord(address ADDRESS_TYPE, wordValue uint16) error
 	OutputDWord(address ADDRESS_TYPE, dwordValue uint32) error
@@ -12,5 +13,5 @@ type IMemory[ADDRESS_TYPE any] interface {
 	InputQWord(address ADDRESS_TYPE) (uint64, error)
 
 	// Returns the memory as a byte array
-	GetBytes() ([]byte, uint64)
+	GetBytes() []byte
 }
