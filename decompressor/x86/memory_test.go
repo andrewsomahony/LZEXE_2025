@@ -16,6 +16,10 @@ func TestRealModeMemoryByteIO(testing_handle *testing.T) {
 
 	real_mode_memory := realModeMemory{}
 
-	error := real_mode_memory.OutputByte(address_to_use, byte_to_use)
-	assert.Nil(testing_handle, error)
+	output_error := real_mode_memory.OutputByte(address_to_use, byte_to_use)
+	assert.Nil(testing_handle, output_error)
+
+	input_byte, input_error := real_mode_memory.InputByte(address_to_use)
+	assert.Nil(testing_handle, input_error)
+	assert.Equal(testing_handle, input_byte, byte_to_use)
 }

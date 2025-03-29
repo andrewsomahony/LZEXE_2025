@@ -11,5 +11,5 @@ func TestConvertRealModeMemoryAddressToFlatAddress(testing_handle *testing.T) {
 		Offset: 16,
 	}
 
-	assert.Equal(testing_handle, uint32(144), address.RealModeAddressToFlatAddress())
+	assert.Equal(testing_handle, FlatAddress(144), address.RealModeAddressToFlatAddress())
 }
