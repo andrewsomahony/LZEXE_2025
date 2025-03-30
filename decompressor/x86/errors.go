@@ -5,5 +5,5 @@ import "github.com/joomcode/errorx"
 var (
 	X86Errors = errorx.NewNamespace("x86errors")
 
-	InvalidAddress = X86Errors.NewType("invalid_address")
+	InvalidRealModeAddress = X86Errors.NewType("invalid_real_mode_address")
 )
