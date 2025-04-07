@@ -8,6 +8,12 @@ type RealModeEnvironment struct {
 	memory memory.IMemory[RealModeMemoryAddress]
 }
 
+func CreateNewRealModeEnvironment() RealModeEnvironment {
+	return RealModeEnvironment{
+		memory: &realModeMemory{},
+	}
+}
+
 func (real_mode_environment *RealModeEnvironment) GetMemory() memory.IMemory[RealModeMemoryAddress] {
 	return real_mode_environment.memory
 }
