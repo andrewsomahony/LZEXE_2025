@@ -1,27 +1,27 @@
 package routine
 
 import (
-	"github.com/andrewsomahony/LZEXE_2025/environment"
 	routine "github.com/andrewsomahony/LZEXE_2025/routine/data"
 	"github.com/andrewsomahony/LZEXE_2025/x86"
 )
 
-// This struct represents our decompression routine
-
-type decompressionRoutine struct {
-	environment environment.IDecompressorEnvironment[x86.RealModeMemoryAddress]
-}
-
 // Decompresses LZEXE compressed data, represented in the input data
-func Decompress(inputData *routine.RoutineInputData) routine.RoutineOutputData {
-	// Create a new decompression routine environment
-	environment := x86.CreateNewRealModeEnvironment()
+func Decompress(inputData routine.RoutineInputData) routine.RoutineOutputData {
+	// Create a new decompression routine environment to store our result
+	environment := x86.NewRealModeEnvironment()
 
-	// Create our decompression routine with the address of our environment
-	// to represent the required interface
-	decompression_routine := decompressionRoutine{
-		environment: &environment,
-	}
+	// We first need to check our data header, as there is a signature there
+
+	// We can checksum our assembly language routine, namely the decompression routine
+	// movement code, and the decompression routine itself, to make sure that we are 
+	// working with an LZEXE-encoded file
+
+	// We don't need to move any data around like the routine does, so once we are comfortable
+	// that we are working with an LZEXE file, we can simply find our compressed data using 
+	// our header information and start running through it
+
+	// Our relocation table is stored in the decompression code, right at the end at a fixed
+	// offset, so we know how to get there as well
 
 	// Return our result
 	return routine.RoutineOutputData{}
