@@ -1,8 +1,8 @@
 package x86
 
 import (
-	"github.com/andrewsomahony/LZEXE_2025/environment"
-	"github.com/andrewsomahony/LZEXE_2025/memory"
+	"github.com/andrewsomahony/LZEXE_2025/decompressor/environment"
+	"github.com/andrewsomahony/LZEXE_2025/decompressor/memory"
 )
 
 type RealModeEnvironment struct {

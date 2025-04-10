@@ -1,4 +1,4 @@
-module github.com/andrewsomahony/LZEXE_2025
+module github.com/andrewsomahony/LZEXE_2025/decompressor
 
 go 1.24.0
 

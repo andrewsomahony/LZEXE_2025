@@ -1,7 +1,7 @@
 package environment
 
 import (
-	"github.com/andrewsomahony/LZEXE_2025/memory"
+	"github.com/andrewsomahony/LZEXE_2025/decompressor/memory"
 )
 
 type IDecompressorEnvironment[ADDRESS_TYPE any] interface {

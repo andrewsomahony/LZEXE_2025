@@ -1,6 +1,6 @@
 package routine
 
-import "github.com/andrewsomahony/LZEXE_2025/x86"
+import "github.com/andrewsomahony/LZEXE_2025/decompressor/x86"
 
 // This structure represents the input data that our decompression
 // routine expects

@@ -1,8 +1,8 @@
 package routine
 
 import (
-	routine "github.com/andrewsomahony/LZEXE_2025/routine/data"
-	"github.com/andrewsomahony/LZEXE_2025/x86"
+	routine "github.com/andrewsomahony/LZEXE_2025/decompressor/routine/data"
+	"github.com/andrewsomahony/LZEXE_2025/decompressor/x86"
 )
 
 // Decompresses LZEXE compressed data, represented in the input data
