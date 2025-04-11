@@ -1,9 +1,8 @@
 package main
 
-import "github.com/andrewsomahony/LZEXE_2025/decompressor"
 import "fmt"
-
+import "github.com/andrewsomahony/LZEXE_2025/decompressor"
 
 func main() {
-	fmt.Println("This is the decompressor")
+	fmt.Println("This is the decompressor app")
 }
