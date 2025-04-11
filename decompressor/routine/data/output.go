@@ -1,6 +1,6 @@
 package routine
 
-import "github.com/andrewsomahony/LZEXE_2025/x86"
+import "github.com/andrewsomahony/LZEXE_2025/decompressor/x86"
 
 // This struct represents the data that we expect for our decompression
 // routine output.  It essentially provides the information needed to
