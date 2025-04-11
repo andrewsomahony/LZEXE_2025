@@ -7,5 +7,5 @@ import (
 )
 
 func main() {
-	fmt.Println("This is the decompressor app")
+	fmt.Println("This is the decompressor app volume 2")
 }
