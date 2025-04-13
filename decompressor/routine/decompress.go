@@ -1,14 +1,13 @@
 package routine
 
 import (
-	routine "github.com/andrewsomahony/LZEXE_2025/decompressor/routine/data"
 	"github.com/andrewsomahony/LZEXE_2025/decompressor/x86"
 )
 
 // Decompresses LZEXE compressed data, represented in the input data
-func Decompress(inputData routine.RoutineInputData) routine.RoutineOutputData {
+func Decompress(inputData RoutineInputData) RoutineOutputData {
 	// Create a new decompression routine environment to store our result
-	environment := x86.NewRealModeEnvironment()
+	environment := x86.RealModeEnvironment{}
 
 	// We first need to check our data header, as there is a signature there
 
@@ -24,5 +23,5 @@ func Decompress(inputData routine.RoutineInputData) routine.RoutineOutputData {
 	// offset, so we know how to get there as well
 
 	// Return our result
-	return routine.RoutineOutputData{}
+	return RoutineOutputData{}
 }
