@@ -1,14 +1,21 @@
 package x86
 
+import (
+	"bytes"
+	"encoding/binary"
+)
+
+const REAL_MODE_MEMORY_SIZE = 1 << 20
+
 // Real mode can only store up to 1 MB (20 bit address space),
 // so we can allocate it right as part of our struct
 type realModeMemory struct {
-	buffer [1 << 20]byte
+	buffer [REAL_MODE_MEMORY_SIZE]byte
 }
 
 func (real_mode_memory *realModeMemory) GetSize() uint64 {
 	// Return our memory size
-	return 1 << 20
+	return uint64(len(real_mode_memory.buffer))
 }
 
 // Checks a flat address to make sure that it is within our bounds
@@ -46,11 +53,11 @@ func (real_mode_memory *realModeMemory) getMemorySlice(address RealModeMemoryAdd
 
 func (real_mode_memory *realModeMemory) OutputByte(address RealModeMemoryAddress, byteValue byte) error {
 	memory_slice, error := real_mode_memory.getMemorySlice(address, 1)
-	
-	if nil == error {
-		// Address is valid, we can modify our slice
-		memory_slice[0] = byteValue
-	}
+
+  if nil == error {
+  	// Address is valid, we can modify our slice
+  	memory_slice[0] = byteValue
+  }
 	return error
 }
 
@@ -58,9 +65,8 @@ func (real_mode_memory *realModeMemory) OutputWord(address RealModeMemoryAddress
 	memory_slice, error := real_mode_memory.getMemorySlice(address, 2)
 
 	if nil == error {
-		// Intel Real Mode uses little endian, so we need to do that as well
-		memory_slice[0] = byte(wordValue & 0xFF)
-		memory_slice[1] = byte((wordValue >> 8) & 0xFF)
+		// x86 real mode uses little endian, so we need to do so as well
+		binary.LittleEndian.PutUint16(memory_slice, wordValue)
 	}
 
 	// Return our error if we have one
@@ -74,10 +80,7 @@ func (real_mode_memory *realModeMemory) OutputDWord(address RealModeMemoryAddres
 
 	if nil == error {
 		// x86 real mode uses little endian, so we need to do so as well
-		memory_slice[0] = byte(dwordValue & 0xFF)
-		memory_slice[1] = byte((dwordValue >> 8) & 0xFF)
-		memory_slice[2] = byte((dwordValue >> 16) & 0xFF)
-		memory_slice[3] = byte((dwordValue >> 24) & 0xFF)
+		binary.LittleEndian.PutUint32(memory_slice, dwordValue)
 	}
 
 	// Return our error if we have one
@@ -90,14 +93,7 @@ func (real_mode_memory *realModeMemory) OutputQWord(address RealModeMemoryAddres
 
 	if nil == error {
 		// x86 real mode uses little endian, so we need to do so as well
-		memory_slice[0] = byte(qwordValue & 0xFF)
-		memory_slice[1] = byte((qwordValue >> 8) & 0xFF)
-		memory_slice[2] = byte((qwordValue >> 16) & 0xFF)
-		memory_slice[3] = byte((qwordValue >> 24) & 0xFF)
-		memory_slice[4] = byte((qwordValue >> 32) & 0xFF)
-		memory_slice[5] = byte((qwordValue >> 40) & 0xFF)
-		memory_slice[6] = byte((qwordValue >> 48) & 0xFF)
-		memory_slice[7] = byte((qwordValue >> 56) & 0xFF)
+		binary.LittleEndian.PutUint64(memory_slice, qwordValue)
 	}
 
 	// Return our error if we have one
@@ -119,8 +115,8 @@ func (real_mode_memory *realModeMemory) InputWord(address RealModeMemoryAddress)
 	var input_word uint16
 
 	if nil == error {
-		input_word = uint16(memory_slice[1]) << 8 | 
-								 uint16(memory_slice[0])
+		// Perform our read, using little endian as that's what x86 uses
+		binary.Read(bytes.NewReader(memory_slice), binary.LittleEndian, &input_word)
 	}
 
 	return input_word, error
@@ -130,10 +126,8 @@ func (real_mode_memory *realModeMemory) InputDWord(address RealModeMemoryAddress
 	var input_dword uint32
 
 	if nil == error {
-		input_dword = uint32(memory_slice[3]) << 24 | 
-								 uint32(memory_slice[2]) << 16 | 
-								 uint32(memory_slice[1]) << 8 | 
-								 uint32(memory_slice[0])
+		// Perform our read, using little endian as that's what x86 uses
+		binary.Read(bytes.NewReader(memory_slice), binary.LittleEndian, &input_dword)
 	}
 
 	return input_dword, error
@@ -143,14 +137,8 @@ func (real_mode_memory *realModeMemory) InputQWord(address RealModeMemoryAddress
 	var input_qword uint64
 
 	if nil == error {
-		input_qword = uint64(memory_slice[7]) << 56 |
-									uint64(memory_slice[6]) << 48 |
-									uint64(memory_slice[5]) << 40 |
-									uint64(memory_slice[4]) << 32 |
-									uint64(memory_slice[3]) << 24 |
-									uint64(memory_slice[2]) << 16 |
-								  uint64(memory_slice[1]) << 8 |
-								  uint64(memory_slice[0])
+		// Perform our read, using little endian as that's what x86 uses
+		binary.Read(bytes.NewReader(memory_slice), binary.LittleEndian, &input_qword)
 	}
 
 	return input_qword, error

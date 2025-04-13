@@ -40,7 +40,7 @@ func runTest[VALUE_TYPE any](testing_handle *testing.T, valueToUse VALUE_TYPE, i
 	// Make sure we don't have an error
 	assert.Nil(testing_handle, input_error)
 	// Make sure our input byte is the same as the one we wrote
-	assert.Equal(testing_handle, input_byte, valueToUse)
+	assert.Equal(testing_handle, valueToUse, input_byte)
 }
 
 func TestRealModeMemorySize(testing_handle *testing.T) {
